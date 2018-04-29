@@ -45,13 +45,10 @@
     (dissoc this :subscriber :read-chan))
 
   p/Checkpointed
-  (checkpoint [this]
-    (info "checkpoint"))
+  (checkpoint [this])
 
   (checkpointed! [this epoch]
-    (info "checkpointed, epoch = " epoch)
     (run! (fn [epoch]
-            (info "checkpointing epoch " epoch ", ackers = " (get @processing epoch))
             (run! #(.ack %) (get @processing epoch))
             (vswap! processing dissoc epoch))
 
@@ -61,14 +58,12 @@
                   (keys @processing))))
 
   (recover! [this replica-version checkpoint]
-    (info "recovering")
     (vreset! epoch 1)
     (vreset! processing {})
     this)
 
   p/BarrierSynchronization
   (synced? [this ep]
-    (info "synced?, ep = " (pr-str ep))
     (vreset! epoch (inc ep))
     this)
 
@@ -77,7 +72,6 @@
   ;;
   ;; As such, we only support streaming operations.
   (completed? [this]
-    (info "completed? never complete!")
     false)
 
   p/Input
@@ -85,9 +79,8 @@
     (let [timeout-chan (async/timeout timeout-ms)
           [segment res-chan] (async/alts!! [timeout-chan read-chan])]
       (when (= read-chan res-chan)
-        (info "has segment: " (pr-str segment))
         (vswap! processing update @epoch conj (:acker segment))
-        (timbre/spy :info (deserializer-fn (.toStringUtf8 (:msg segment))))))))
+        (deserializer-fn (.toStringUtf8 (:msg segment)))))))
 
 
 (defn read-handle-exception [event lifecycle lf-kw exception]
