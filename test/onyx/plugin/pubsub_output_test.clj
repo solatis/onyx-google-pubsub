@@ -39,7 +39,7 @@
 (defn serializer-fn [x]
   (pr-str x))
 
-(deftest sqs-output-test
+(deftest pubsub-output-test
   (let [id (java.util.UUID/randomUUID)
         env-config {:onyx/tenancy-id id
                     :zookeeper/address "127.0.0.1:2188"
