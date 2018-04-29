@@ -57,12 +57,13 @@ Catalog entry:
 
 #### Attributes
 
-|key                                 | type      | description
-|------------------------------------|-----------|------------
-|`:pubsub/deserializer-fn`           | `keyword` | A keyword pointing to a fully qualified function that will deserialize the message payload from a string.
-|`:pubsub/project`                   | `string`  | Your Google Cloud project id.
-|`:pubsub/subscription`              | `string`  | The subscription id
-|`:pubsub/max-inflight-messages`     | `integer` | Maximum number of in-flight messages.
+|key                                      | type      | description
+|-----------------------------------------|-----------|------------
+|`:pubsub/google-application-credentials` | `string`  | Absolute file location to the application credentials JSON file. Typically called `application_default_credentials.json`, you can generate and download these from Google Cloud's IAM.
+|`:pubsub/deserializer-fn`                | `keyword` | A keyword pointing to a fully qualified function that will deserialize the message payload from a string.
+|`:pubsub/project`                        | `string`  | Your Google Cloud project id.
+|`:pubsub/subscription`                   | `string`  | The subscription id
+|`:pubsub/max-inflight-messages`          | `integer` | Maximum number of in-flight messages.
 
 Catalog entry:
 
@@ -82,12 +83,21 @@ Catalog entry:
 
 #### Attributes
 
-|key                                 | type      | description
-|------------------------------------|-----------|------------
-|`:pubsub/serializer-fn`             | `keyword` | A keyword pointing to a fully qualified function that will serialize the message payload to a string.
-|`:pubsub/project`                   | `string`  | Your Google Cloud project id.
-|`:pubsub/topic`                     | `string`  | The topic
-|`:pubsub/max-inflight-messages`     | `integer` | Maximum number of in-flight messages.
+|key                                      | type      | description
+|-----------------------------------------|-----------|------------
+|`:pubsub/google-application-credentials` | `string`  | Absolute file location to the application credentials JSON file. Typically called `application_default_credentials.json`, you can generate and download these from Google Cloud's IAM.
+|`:pubsub/serializer-fn`                  | `keyword` | A keyword pointing to a fully qualified function that will serialize the message payload to a string.
+|`:pubsub/project`                        | `string`  | Your Google Cloud project id.
+|`:pubsub/topic`                          | `string`  | The topic
+|`:pubsub/max-inflight-messages`          | `integer` | Maximum number of in-flight messages.
+
+#### Running tests
+
+You need to provide two variables:
+ * Your Google Cloud project id, eg 'my-project-54321'
+ * The location of your credentials JSON file, commonly application_default_credentials.json.
+
+You can edit these values at `test/onyx/plugin/pubsub_util.clj`.
 
 #### Contributing
 
