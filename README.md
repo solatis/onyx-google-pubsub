@@ -55,7 +55,7 @@ Catalog entry:
  :onyx/doc "Reads segments from a Google Cloud Pub/Sub Subscription"}
 ```
 
-#### Attributes
+###### Attributes
 
 |key                                      | type      | description
 |-----------------------------------------|-----------|------------
@@ -64,6 +64,9 @@ Catalog entry:
 |`:pubsub/project`                        | `string`  | Your Google Cloud project id.
 |`:pubsub/subscription`                   | `string`  | The subscription id
 |`:pubsub/max-inflight-messages`          | `integer` | Maximum number of in-flight messages.
+
+
+##### Output Task
 
 Catalog entry:
 
@@ -81,7 +84,7 @@ Catalog entry:
  :onyx/doc "Writes segments to a Google Cloud Pub/Sub Topic"}
 ```
 
-#### Attributes
+###### Attributes
 
 |key                                      | type      | description
 |-----------------------------------------|-----------|------------
