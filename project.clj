@@ -16,8 +16,8 @@
 
                  [com.google.guava/guava "24.1-jre"]
                  [com.google.code.findbugs/jsr305 "3.0.0"]
-                 [org.apache.curator/curator-framework "4.0.1"]
-                 [org.apache.curator/curator-test "4.0.1"]
+                 [org.apache.curator/curator-framework "3.3.0"]
+                 [org.apache.curator/curator-test "3.3.0"]
 
                  [org.onyxplatform/onyx "0.12.7"
                   :exclusions [com.google.guava/guava
