@@ -39,8 +39,6 @@
 (defn serializer-fn [x]
   (pr-str x))
 
-(def project "mondrian-158913")
-
 (deftest sqs-output-test
   (let [id (java.util.UUID/randomUUID)
         env-config {:onyx/tenancy-id id
@@ -59,8 +57,8 @@
         topic (str "onyx-test-" (System/currentTimeMillis))
         subscription (str "onyx-test-subscription-" (System/currentTimeMillis))]
 
-    (util/create-topic! project topic)
-    (util/create-subscription! project topic subscription)
+    (util/create-topic! util/project topic)
+    (util/create-subscription! util/project topic subscription)
 
     (with-test-env [test-env [3 env-config peer-config]]
       (let [batch-size 10
@@ -83,7 +81,7 @@
                      :lifecycles [{:lifecycle/task :in
                                    :lifecycle/calls ::in-calls}]}
                     (add-task (task/pubsub-output :out
-                                                  {:pubsub/project project
+                                                  {:pubsub/project util/project
                                                    :pubsub/topic topic
                                                    :pubsub/google-application-credentials util/google-application-credentials
                                                    :pubsub/serializer-fn ::serializer-fn})))
@@ -96,7 +94,7 @@
         (run! #(>!! @in-chan %) input-messages)
 
         (let [job-id (:job-id (onyx.api/submit-job peer-config job))
-              results (util/pull-subscription project subscription n-messages)]
+              results (util/pull-subscription util/project subscription n-messages)]
 
           (is (= (sort (map :n input-messages))
                  (sort (map :n results))))

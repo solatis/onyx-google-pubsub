@@ -19,7 +19,10 @@
    [com.google.cloud.pubsub.v1 Subscriber MessageReceiver]
    [com.google.cloud.pubsub.v1 Publisher]))
 
+;; Modify these values when you want to run the tests
+(def project "mondrian-158913")
 (def google-application-credentials "/home/lmergen/git/mondrian/application_default_credentials.json")
+;; End modification
 
 (defn ->pubsub-ingestable
   [value]

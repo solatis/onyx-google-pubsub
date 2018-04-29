@@ -16,7 +16,6 @@
    [com.google.pubsub.v1 ProjectSubscriptionName Subscription]
    [com.google.cloud.pubsub.v1 Subscriber SubscriptionAdminClient MessageReceiver]))
 
-
 (defrecord PubSubInput
     [google-application-credentials project subscription
      deserializer-fn

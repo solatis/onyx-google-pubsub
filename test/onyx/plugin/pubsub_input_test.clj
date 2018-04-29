@@ -35,8 +35,6 @@
 (def out-calls
   {:lifecycle/before-task-start inject-out-ch})
 
-(def project "mondrian-158913")
-
 (deftest pubsub-input-test
   (let [id (java.util.UUID/randomUUID)
         env-config {:onyx/tenancy-id id
@@ -56,8 +54,8 @@
         topic (str "onyx-test-" (System/currentTimeMillis))
         subscription (str "onyx-test-subscription-" (System/currentTimeMillis))]
 
-    (util/create-topic! project topic)
-    (util/create-subscription! project topic subscription)
+    (util/create-topic! util/project topic)
+    (util/create-subscription! util/project topic subscription)
 
     (with-test-env [test-env [3 env-config peer-config]]
       (let [batch-size 10
@@ -81,14 +79,14 @@
                                    :lifecycle/calls ::out-calls}]}
 
                     (add-task (task/pubsub-input :in
-                                                 {:pubsub/project project
+                                                 {:pubsub/project util/project
                                                   :pubsub/subscription subscription
                                                   :pubsub/google-application-credentials util/google-application-credentials
                                                   :pubsub/deserializer-fn ::clojure.edn/read-string})))
 
             n-messages 200
             input-messages (map (fn [v] {:n v}) (range n-messages))
-            send-result (time (run! (partial util/publish-batch! project topic)
+            send-result (time (run! (partial util/publish-batch! util/project topic)
                                     (partition-all 10 input-messages)))]
 
         (reset! out-chan (chan 1000000))
