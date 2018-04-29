@@ -21,7 +21,7 @@ In your peer boot-up namespace:
 
 * Per Google Cloud Pub/Sub's behavior, message ordering is not preserved.
 
-* Conforming to Google Pub/Sub's behavior, this plugin implements at-least-once behaviour. As a
+* Conforming to Google Pub/Sub's behavior, this plugin implements at-least-once delivery. As a
 result, you are recommended to implement idempotent input processors.
 
 * For high throughput we are making use of the async API. This means that there can be a large
