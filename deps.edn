@@ -1,0 +1,19 @@
+{:paths ["src" "test"]
+
+ :deps
+ {org.clojure/clojure {:mvn/version "1.8.0"}
+  com.google.guava/guava {:mvn/version "24.1-jre"}
+  com.google.code.findbugs/jsr305 {:mvn/version "3.0.0"}
+  org.apache.curator/curator-framework {:mvn/version "3.3.0"}
+  org.apache.curator/curator-test {:mvn/version "3.3.0"}
+
+  org.onyxplatform/onyx {:mvn/version "0.12.7"
+                         :exclusions [com.google.guava/guava
+                                      org.apache.curator/curator-framework
+                                      org.apache.curator/curator-test]}
+
+  ;; Google Cloud Stuff -- Google Cloud Java SDK has quite
+  ;; a bit of dependency spaghetti, so we need to be explicit
+  ;; for a few deps.
+  com.google.cloud/google-cloud-pubsub {:mvn/version "0.45.0-beta"
+                                        :exclusions [com.google.code.findbugs/jsr305]}}}
