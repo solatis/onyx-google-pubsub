@@ -28,7 +28,9 @@
                  ;; a bit of dependency spaghetti, so we need to be explicit
                  ;; for a few deps.
                  [com.google.cloud/google-cloud-pubsub "0.45.0-beta"
-                  :exclusions [com.google.code.findbugs/jsr305]]]
+                  :exclusions [com.google.code.findbugs/jsr305]]
+
+                 [cheshire "5.7.0"]]
   :global-vars  {*warn-on-reflection* true}
   :resource-paths ["resources/"]
   :profiles {:dev {:dependencies []

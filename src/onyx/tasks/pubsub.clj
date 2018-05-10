@@ -1,21 +1,21 @@
 (ns onyx.tasks.pubsub
-  (:require [onyx.schema :as os]
-            [schema.core :as s]))
+  (:require
+   [cheshire.core :as json]
+   [onyx.schema :as os]
+   [schema.core :as s]))
 
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;; task schemas
+;;;; Input task
+(defn deserialize-message-json [^bytes bs]
+  (try
+    (json/parse-string (String. bs "UTF-8"))
+    (catch Exception e
+      {:error e})))
 
-(def max-batch-size
-  (s/pred (fn [batch-size]
-            (and (> batch-size 0)
-                 (<= batch-size 10)))
-          'max-pubsub-batch-size-10))
-
-(def batch-timeout-check
-  (s/pred (fn [batch-timeout]
-            (zero? (rem batch-timeout 1000)))
-          'min-batch-timeout-divisible-1000))
+(defn deserialize-message-edn [^bytes bs]
+  (try
+    (read-string (String. bs "UTF-8"))
+    (catch Exception e
+      {:error e})))
 
 (def PubSubInputTaskMap
   {(s/optional-key :pubsub/project) s/Str
@@ -23,14 +23,6 @@
    (s/optional-key :pubsub/max-inflight-receive-batches) s/Int
    (s/optional-key :pubsub/google-application-credentials) s/Str
    :pubsub/deserializer-fn os/NamespacedKeyword
-   :onyx/batch-size max-batch-size
-   (os/restricted-ns :pubsub) s/Any})
-
-(def PubSubOutputTaskMap
-  {(s/optional-key :pubsub/project) s/Str
-   (s/optional-key :pubsub/topic) s/Str
-   (s/optional-key :pubsub/google-application-credentials) s/Str
-   :pubsub/serializer-fn os/NamespacedKeyword
    :onyx/batch-size max-batch-size
    (os/restricted-ns :pubsub) s/Any})
 
@@ -52,6 +44,28 @@
            :lifecycles [{:lifecycle/task task-name
                          :lifecycle/calls :onyx.plugin.pubsub-input/input-calls}]}
     :schema {:task-map PubSubInputTaskMap}}))
+
+;; Output task
+(defn serialize-message-json [segment]
+  (try
+    (.getBytes (json/generate-string segment))
+    (catch JsonGenerationException e
+      (throw (ex-info (format "Could not serialize segment: %s" segment)
+                      {:recoverable? false
+                       :segment segment
+                       :cause e})))))
+
+(defn serialize-message-edn [segment]
+  (.getBytes (pr-str segment)))
+
+(def PubSubOutputTaskMap
+  {(s/optional-key :pubsub/project) s/Str
+   (s/optional-key :pubsub/topic) s/Str
+   (s/optional-key :pubsub/google-application-credentials) s/Str
+   :pubsub/serializer-fn os/NamespacedKeyword
+   :onyx/batch-size max-batch-size
+   (os/restricted-ns :pubsub) s/Any})
+
 
 (s/defn ^:always-validate pubsub-output
   [task-name :- s/Keyword task-opts :- {s/Any s/Any}]
