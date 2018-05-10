@@ -1,4 +1,4 @@
-(defproject org.onyxplatform/onyx-google-pubsub "0.12.7.0"
+(defproject org.onyxplatform/onyx-google-pubsub "0.12.7.1"
   :description "Onyx plugin for Google Cloud Pub/Sub"
   :url "https://github.com/onyx-platform/onyx-google-pubsub"
   :license {:name "Eclipse Public License"
