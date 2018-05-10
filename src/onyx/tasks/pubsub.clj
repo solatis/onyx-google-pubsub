@@ -2,7 +2,8 @@
   (:require
    [cheshire.core :as json]
    [onyx.schema :as os]
-   [schema.core :as s]))
+   [schema.core :as s])
+  (:import [com.fasterxml.jackson.core JsonGenerationException]))
 
 ;;;; Input task
 (defn deserialize-message-json [^bytes bs]
