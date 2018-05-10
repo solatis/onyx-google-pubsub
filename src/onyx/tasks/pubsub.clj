@@ -23,7 +23,7 @@
    (s/optional-key :pubsub/max-inflight-receive-batches) s/Int
    (s/optional-key :pubsub/google-application-credentials) s/Str
    :pubsub/deserializer-fn os/NamespacedKeyword
-   :onyx/batch-size max-batch-size
+   :onyx/batch-size s/Int
    (os/restricted-ns :pubsub) s/Any})
 
 (s/defn ^:always-validate pubsub-input
@@ -63,7 +63,7 @@
    (s/optional-key :pubsub/topic) s/Str
    (s/optional-key :pubsub/google-application-credentials) s/Str
    :pubsub/serializer-fn os/NamespacedKeyword
-   :onyx/batch-size max-batch-size
+   :onyx/batch-size s/Int
    (os/restricted-ns :pubsub) s/Any})
 
 
