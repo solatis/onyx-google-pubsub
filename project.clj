@@ -14,11 +14,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  ^{:voom {:repo "git@github.com:onyx-platform/onyx.git" :branch "master"}}
 
-                 [com.google.guava/guava "24.1-jre"]
-                 [org.apache.curator/curator-framework "4.0.1"]
-                 [org.apache.curator/curator-test "4.0.1"]
-
-                 [org.onyxplatform/onyx "0.13.0"]
+                 [org.onyxplatform/onyx "0.13.0"
+                  :exclusions [com.google.guava/guava]]
 
                  ;; Google Cloud Stuff -- Google Cloud Java SDK has quite
                  ;; a bit of dependency spaghetti, so we need to be explicit
