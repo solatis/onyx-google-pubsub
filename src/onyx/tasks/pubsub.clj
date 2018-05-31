@@ -6,15 +6,15 @@
   (:import [com.fasterxml.jackson.core JsonGenerationException]))
 
 ;;;; Input task
-(defn deserialize-message-json [^bytes bs]
+(defn deserialize-message-json [s]
   (try
-    (json/parse-string (String. bs "UTF-8"))
+    (json/parse-string s true)
     (catch Exception e
       {:error e})))
 
-(defn deserialize-message-edn [^bytes bs]
+(defn deserialize-message-edn [s]
   (try
-    (read-string (String. bs "UTF-8"))
+    (read-string s)
     (catch Exception e
       {:error e})))
 
@@ -49,7 +49,7 @@
 ;; Output task
 (defn serialize-message-json [segment]
   (try
-    (.getBytes (json/generate-string segment))
+    (json/generate-string segment)
     (catch JsonGenerationException e
       (throw (ex-info (format "Could not serialize segment: %s" segment)
                       {:recoverable? false
@@ -57,7 +57,7 @@
                        :cause e})))))
 
 (defn serialize-message-edn [segment]
-  (.getBytes (pr-str segment)))
+  (pr-str segment))
 
 (def PubSubOutputTaskMap
   {(s/optional-key :pubsub/project) s/Str
