@@ -113,7 +113,7 @@
   : The value being ingested. Should be accepted by s."
   [s v]
   (let [data (ByteString/copyFromUtf8
-              (s v))]
+               (s v))]
     (-> (PubsubMessage/newBuilder)
         (.setData data)
         (.build))))
