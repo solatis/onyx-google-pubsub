@@ -1,4 +1,4 @@
-(defproject org.onyxplatform/onyx-google-pubsub "0.12.7.1"
+(defproject org.onyxplatform/onyx-google-pubsub "0.13.0.0"
   :description "Onyx plugin for Google Cloud Pub/Sub"
   :url "https://github.com/onyx-platform/onyx-google-pubsub"
   :license {:name "Eclipse Public License"
@@ -15,22 +15,17 @@
                  ^{:voom {:repo "git@github.com:onyx-platform/onyx.git" :branch "master"}}
 
                  [com.google.guava/guava "24.1-jre"]
-                 [com.google.code.findbugs/jsr305 "3.0.0"]
                  [org.apache.curator/curator-framework "4.0.1"]
                  [org.apache.curator/curator-test "4.0.1"]
 
-                 [org.onyxplatform/onyx "0.12.7"
-                  :exclusions [com.google.guava/guava
-                               org.apache.curator/curator-framework
-                               org.apache.curator/curator-test]]
+                 [org.onyxplatform/onyx "0.13.0"]
 
                  ;; Google Cloud Stuff -- Google Cloud Java SDK has quite
                  ;; a bit of dependency spaghetti, so we need to be explicit
                  ;; for a few deps.
-                 [com.google.cloud/google-cloud-pubsub "0.45.0-beta"
-                  :exclusions [com.google.code.findbugs/jsr305]]
+                 [com.google.cloud/google-cloud-pubsub "1.31.0"]
 
-                 [cheshire "5.7.0"]]
+                 [cheshire "5.8.0"]]
   :global-vars  {*warn-on-reflection* true}
   :resource-paths ["resources/"]
   :profiles {:dev {:dependencies []
