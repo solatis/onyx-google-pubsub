@@ -17,6 +17,19 @@ In your peer boot-up namespace:
           [onyx.plugin.pubsub-output])
 ```
 
+##### Dependency conflicts
+
+Because Onyx 0.13 still relies on an older version of Apache `org.apache.curator/curator-test`, which in turn relies on an old version of Google's Guava library, there is a dependency conflict with Google's own Java SDKs which use a much newer version of Guava.
+
+The solution is to ensure that you're excluding `com.google.guava/guava` from all your Onyx inclusions, and rely on the version that is pulled in through `com.google.cloud/google-cloud-pubsub` like this:
+
+```
+[org.onyxplatform/onyx "0.13.0"
+ :exclusions [com.google.guava/guava]]
+```
+
+This exclusion is safe and has been tested extensively in production at [SocialStreams.io](https://www.socialstreams.io/).
+
 #### Limitations
 
 * Per Google Cloud Pub/Sub's behavior, message ordering is not preserved.
