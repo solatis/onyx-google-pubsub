@@ -7,7 +7,7 @@ Onyx plugin for Google Cloud Pub/Sub.
 In your project file:
 
 ```clojure
-[org.onyxplatform/onyx-google-pubsub "0.12.7.0"]
+[org.onyxplatform/onyx-google-pubsub "0.13.0.0"]
 ```
 
 In your peer boot-up namespace:
