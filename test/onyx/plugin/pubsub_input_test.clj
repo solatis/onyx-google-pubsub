@@ -82,7 +82,7 @@
                                                  {:pubsub/project util/project
                                                   :pubsub/subscription subscription
                                                   :pubsub/google-application-credentials util/google-application-credentials
-                                                  :pubsub/deserializer-fn ::clojure.edn/read-string})))
+                                                  :pubsub/deserializer-fn :clojure.edn/read-string})))
 
             n-messages 200
             input-messages (map (fn [v] {:n v}) (range n-messages))
